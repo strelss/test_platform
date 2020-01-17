@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container content" style="text-align: center;">
+        <div style="display: inline-block; width: 300px;">
+            <h2>Вход в мини Соцсеть</h2>
+            {% if user.is_authenticated %}
+                <p>Вы уже выполнили вход.</p>
+            {% else %}
+            <form method="post" class="bootstrap-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="hidden" name="next" value="{% url 'login:profile' %}">
+                <input type="submit" class="btn btn-success" value="Войти">
+                <button class="btn btn-info mb-2">
+                    <a href="{% url 'social:begin' 'linkedin-oauth2' %}">Войти через LinkedIn</a>
+                </button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
