@@ -18,3 +18,37 @@ ul.errorlist{
     list-style: none;
     font-size: 12px;
 }
+
+.block{
+    border: 1px solid #e2e2e2;
+    border-radius: 4px;
+    box-shadow: 0 0 5px -4px rgba(128, 128, 128, 0.69);
+    background: white;
+    padding: 10px;
+    margin: 5px;
+}
+
+.left-menu a{
+    display: block;
+    line-height: 30px;
+    color: rgb(20, 93, 148);
+}
+
+.mainpage-avatar-img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.right-menu-links{
+    margin-top: 20px;
+}
+
+.right-menu-links a{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.card{
+    margin-bottom: 20px;
+}

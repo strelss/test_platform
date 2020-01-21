@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile
+from .models import Profile, PostQuiz
 
 class RegisterForm(forms.Form):
     username = forms.CharField(label="Имя пользователя")
@@ -22,3 +22,11 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ['user']
+
+
+
+class PostQuizForm(forms.ModelForm):
+
+    class Meta:
+        model = PostQuiz
+        exclude = ['author']

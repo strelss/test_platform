@@ -9,7 +9,7 @@ from django.urls import reverse
 
 
 from .models import Profile, PostQuiz
-from .forms import RegisterForm, ProfileForm
+from .forms import RegisterForm, ProfileForm, PostQuizForm
 
 
 
@@ -18,8 +18,15 @@ class HomeView(TemplateView):
     timeline_template_name = "timeline.html"
 
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated:
             return render(request, self.template_name)
+
+        if request.method == 'POST':
+            form = PostQuizForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.instance.author = request.user
+                form.save()
+                return redirect(reverse('login:home'))
 
         context = {
             'posts': PostQuiz.objects.all()

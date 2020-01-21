@@ -5,13 +5,13 @@
         <div class="row">
             <div class="col-3">
                 <div class="block left-menu">
-                    <a href="{% url 'profile' %}">
+                    <a href="{% url 'login:profile' %}">
                         <i class="fa fa-user-circle"></i> Мой профиль
                     </a>
-                    <a href="{% url 'home' %}">
+                    <a href="{% url 'login:home' %}">
                         <i class="fa fa-newspaper-o"></i> Новости
                     </a>
-                    <a href="{% url 'home' %}">
+                    <a href="{% url 'login:home' %}">
                         <i class="fa fa-users"></i> Мои друзья
                     </a>
                 </div>
@@ -21,8 +21,14 @@
                     <div class="card-body">
                         <form method="post" name="new-post-form" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <textarea class="form-control form-control-sm" type="text" name="text"
+                            <textarea class="form-control form-control-sm mb-3" type="text" name="text"
                                       placeholder="Описание викторины"></textarea>
+                            <input class="form-control form-control-sm" type="text" name="question"><br>
+                            <input class="form-control form-control-sm" type="text" name="option1"><br>
+                            <input class="form-control form-control-sm" type="text" name="option2"><br>
+                            <input class="form-control form-control-sm" type="text" name="option3"><br>
+                            <input class="form-control form-control-sm" type="text" name="option4"><br>
+                            <input class="form-control form-control-sm" type="text" name="answer"><br>
                             <input class="form-control btn btn-outline-success btn-sm" type="submit" value="Добавить">
                         </form>
                     </div>
@@ -31,9 +37,6 @@
                     {% for post in posts %}
                         <div class="card">
                             <div class="card-body">
-                                {% if post.image.name %}
-                                    <img src="{{ post.image.url }}" class="img-thumbnail"><br>
-                                {% endif %}
                                 {{ post.text }}
                             </div>
                         </div>
@@ -49,10 +52,10 @@
                         <img src="{% static 'img/user.jpg' %}" class="mainpage-avatar-img img-thumbnail">
                     {% endif %}
                     <div class="right-menu-links">
-                        <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm">
+                        <a href="{% url 'login:profile' %}" class="btn btn-outline-primary btn-sm">
                             <i class="fa fa-user-circle"></i> Мой профиль
                         </a>
-                        <a href="{% url 'edit_profile' %}" class="btn btn-outline-success btn-sm">
+                        <a href="{% url 'login:edit_profile' %}" class="btn btn-outline-success btn-sm">
                             <i class="fa fa-pencil-square"></i> Редактировать
                         </a>
                     </div>
