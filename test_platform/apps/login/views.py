@@ -8,14 +8,23 @@ from django.contrib.auth.views import LoginView
 from django.urls import reverse
 
 
-from .models import Profile
+from .models import Profile, PostQuiz
 from .forms import RegisterForm, ProfileForm
 
 
 
 class HomeView(TemplateView):
     template_name = "home.html"
+    timeline_template_name = "timeline.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            return render(request, self.template_name)
+
+        context = {
+            'posts': PostQuiz.objects.all()
+        }
+        return render(request, self.timeline_template_name, context)
 
 
 class RegisterView(TemplateView):

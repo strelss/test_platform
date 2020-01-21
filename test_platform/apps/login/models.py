@@ -16,13 +16,16 @@ class PostQuiz(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор', related_name='posts')
     text = models.CharField(max_length=800, verbose_name='Описание викторины', null=True, blank=True)
 
-    title = models.CharField(max_length=200, verbose_name='Вопрос')
+    question = models.CharField(max_length=200, verbose_name='Вопрос', null=True, blank=True)
+    option1 = models.CharField(max_length=100, verbose_name='Вариант ответа №1', null=True, blank=True)
+    option2 = models.CharField(max_length=100, verbose_name='Вариант ответа №2', null=True, blank=True)
+    option3 = models.CharField(max_length=100, verbose_name='Вариант ответа №3', null=True, blank=True)
+    option4 = models.CharField(max_length=100, verbose_name='Вариант ответа №4', null=True, blank=True)
+    answer = models.CharField(max_length=100, verbose_name='Правильный ответ', null=True, blank=True)
+
 
     class Meta:
         ordering = ["-datetime"]
 
-class Answer(models.Model):
-    postQuiz_id = models.ForeignKey(PostQuiz, on_delete=models.CASCADE)
-    answer = models.CharField(max_length=200, verbose_name='Ответ')
 
 
