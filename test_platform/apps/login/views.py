@@ -11,6 +11,12 @@ from django.urls import reverse
 from .models import Profile, PostQuiz
 from .forms import RegisterForm, ProfileForm, PostQuizForm
 
+class AddQuizViev(TemplateView):
+    template_name = 'quiz/addquiz.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
 
 
 class HomeView(TemplateView):

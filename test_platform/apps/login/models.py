@@ -12,10 +12,16 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True, verbose_name="Дата рождения")
 
 class PostQuiz(models.Model):
-    datetime = models.DateTimeField(verbose_name="Дата публикации", auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор', related_name='posts')
+    datetime = models.DateTimeField(verbose_name="Дата публикации", auto_now_add=True)
     text = models.CharField(max_length=800, verbose_name='Описание викторины', null=True, blank=True)
+    num_of_quest = models.FloatField(max_length=2, verbose_name='Количество вопросов')
 
+    class Meta:
+        ordering = ["-datetime"]
+
+class Question(models.Model):
+    post_quiz = models.ForeignKey(PostQuiz, on_delete=models.CASCADE)
     question = models.CharField(max_length=200, verbose_name='Вопрос', null=True, blank=True)
     option1 = models.CharField(max_length=100, verbose_name='Вариант ответа №1', null=True, blank=True)
     option2 = models.CharField(max_length=100, verbose_name='Вариант ответа №2', null=True, blank=True)
