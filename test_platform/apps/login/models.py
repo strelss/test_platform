@@ -15,7 +15,8 @@ class PostQuiz(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор', related_name='posts')
     datetime = models.DateTimeField(verbose_name="Дата публикации", auto_now_add=True)
     text = models.CharField(max_length=800, verbose_name='Описание викторины', null=True, blank=True)
-    num_of_quest = models.FloatField(max_length=2, verbose_name='Количество вопросов')
+    name_quiz = models.CharField(max_length=100, verbose_name='Название викторины', null=True, blank=True)
+    num_of_quest = models.FloatField(max_length=2, verbose_name='Количество вопросов', null=True, blank=True)
 
     class Meta:
         ordering = ["-datetime"]
@@ -29,9 +30,6 @@ class Question(models.Model):
     option4 = models.CharField(max_length=100, verbose_name='Вариант ответа №4', null=True, blank=True)
     answer = models.CharField(max_length=100, verbose_name='Правильный ответ', null=True, blank=True)
 
-
-    class Meta:
-        ordering = ["-datetime"]
 
 
 

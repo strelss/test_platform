@@ -9,14 +9,41 @@ from django.urls import reverse
 
 
 from .models import Profile, PostQuiz
-from .forms import RegisterForm, ProfileForm, PostQuizForm
+from .forms import RegisterForm, ProfileForm, PostQuizForm, QuestionForm
 
-class AddQuizViev(TemplateView):
-    template_name = 'quiz/addquiz.html'
+def NewQuizAdd(request):
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        text = request.POST['text']
+        num = int(request.POST['num'])
+        name_quiz = request.POST['quest1']
+        print(name_quiz)
+        p = PostQuiz.objects.create(text=text, author=request.user, name_quiz = name_quiz, num_of_quest = num)
+        if form.is_valid():
+            form.instance.post_quiz = p
+            form.save()
+            messages.success(request, "Добавлена новая викторина!")
+            return redirect(reverse('login:home'))
 
-    def dispatch(self, request, *args, **kwargs):
-        return render(request, self.template_name)
-
+def NewQuiz(request):
+    num = int(request.POST['num_of_quest'])
+    if num == '':
+        num = 5
+    num = int(num)
+    if num < 5:
+        num = 5
+    elif num > 10:
+        num =10
+    i = 1
+    a = []
+    while i != num+1:
+        a.append(i)
+        i +=1
+    nums = a
+    question_name = request.POST['question_name']
+    text_quiz = request.POST['text_quiz']
+    form = QuestionForm()
+    return render(request, 'quiz/newquiz.html', {'num': num, 'nums':nums, 'question_name':question_name, 'text_quiz':text_quiz, 'form':form })
 
 
 class HomeView(TemplateView):

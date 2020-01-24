@@ -17,33 +17,34 @@
                 </div>
             </div>
             <div class="col-6 content">
-                <a href="{% url 'login:addquiz' %}" class="form-control btn btn-outline-success btn-sm mt-3 mb-3" >Добавить опрос</a>
-                <!--<div class="card">-->
-                    <!--<div class="card-body">-->
-                        <!--<form method="post" name="new-post-form" enctype="multipart/form-data">-->
-                            <!--{% csrf_token %}-->
-                            <!--<textarea class="form-control form-control-sm mb-3" type="text" name="text"-->
-                                      <!--placeholder="Описание викторины"></textarea>-->
-                            <!--<input class="form-control form-control-sm" type="text" placeholder="Вопрос" name="question"><br>-->
-                            <!--<input class="form-control form-control-sm" type="text" placeholder="Вариант ответа №1" name="option1"><br>-->
-                            <!--<input class="form-control form-control-sm" type="text" placeholder="Вариант ответа №2" name="option2"><br>-->
-                            <!--<input class="form-control form-control-sm" type="text" placeholder="Вариант ответа №3" name="option3"><br>-->
-                            <!--<input class="form-control form-control-sm" type="text" placeholder="Вариант ответа №4" name="option4"><br>-->
-                            <!--<input class="form-control form-control-sm" type="text" placeholder="Правильный ответ" name="answer"><br>-->
-                            <!--<input class="form-control btn btn-outline-success btn-sm" type="submit" value="Добавить">-->
-                        <!--</form>-->
-                    <!--</div>-->
-                <!--</div>-->
+
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" action="{% url 'login:newquiz' %}" name="new-post-form" enctype="multipart/form-data">
+                            {% csrf_token %}
+                                <p>Добавить новый опрос</p>
+                                <input class="form-control form-control-sm" type="text" placeholder="Название Викторины" name="question_name"><br>
+                                <textarea class="form-control form-control-sm mb-3" type="text" name="text_quiz" placeholder="Описание викторины"></textarea>
+                                <input class="form-control form-control-sm" type="text" placeholder="Количество вопросов (от 5 до 10)" name="num_of_quest"><br>
+                                <input class="form-control btn btn-outline-success btn-sm" type="submit" value="Добавить опрос">
+                        </form>
+                    </div>
+                </div>
                 <div class="timeline">
                     {% for post in posts %}
-                        <div class="card">
-                            <div class="card-body">
+                        <div class="card mt-2 mb-2">
+                            <div class="card-body mt-2 mb-2">
+                                <p>Название викторины</p>
+                                <div class="form-control form-control-sm">{{ post.name_quiz }}</div>
+                                <p>Описание викторины</p>
                                 <div class="form-control form-control-sm">{{ post.text }}</div>
-                                <!--<div class="form-control form-control-sm">{{ post.option1 }}</div>-->
-                                <!--<div class="form-control form-control-sm">{{ post.option2 }}</div>-->
-                                <!--<div class="form-control form-control-sm">{{ post.option3 }}</div>-->
-                                <!--<div class="form-control form-control-sm">{{ post.option4 }}</div>-->
-                                <!--<div class="form-control form-control-sm">{{ post.answer }}</div>-->
+                                <p>Дата публикации</p>
+                                <div class="form-control form-control-sm">{{ post.datetime }}</div>
+                                <p>Количество вопросов</p>
+                                <div class="form-control form-control-sm">{{ post.num_of_quest }}</div>
+                                <button class="form-control form-control-sm button mt-1">Пройти тест</button>
+                                <button class="button mt-1 form-control form-control-sm">Редактировать</button>
+                                <button class="button mt-1 form-control form-control-sm">Удалить</button>
                             </div>
                         </div>
                     {% endfor %}

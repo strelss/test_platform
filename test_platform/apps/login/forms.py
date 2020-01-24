@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, PostQuiz
+from .models import Profile, PostQuiz, Question
 
 class RegisterForm(forms.Form):
     username = forms.CharField(label="Имя пользователя")
@@ -22,6 +22,22 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ['user']
+
+class QuestionForm(forms.ModelForm):
+
+    class Meta:
+        model = Question
+        fields = ('question', 'option1', 'option2', 'option3', 'option4', 'answer')
+        labels = {'option1': 'Вариант ответа №1', 'option2': 'Вариант ответа №2', 'option3': 'Вариант ответа №3', 'option4': 'Вариант ответа №4', 'answer': 'Правильный ответ'}
+        widgets = {
+            'option1': forms.TextInput(attrs = {'class': 'form-control form-control-sm' }),
+            'option2': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'option3': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'option4': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'answer': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'question': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+        }
+        exclude = ['post_quiz']
 
 
 
