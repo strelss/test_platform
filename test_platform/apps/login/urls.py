@@ -11,5 +11,6 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name='profile'),
     path('edit_profile/', EditProfileView.as_view(), name='edit_profile'),
     path('newquiz/', NewQuiz, name='newquiz'),
-    path('newquizadd/', NewQuizAdd, name='newquizadd')
+    path('newquizadd/', newQuizAdd, name='newquizadd'),
+    path('edit/<int:post_id>', edit, name='edit')
 ]

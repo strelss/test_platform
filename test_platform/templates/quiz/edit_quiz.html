@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="col-8 text-center">
+            <div class="card">
+                    <div class="card-body text-center">
+                        <form method="post" action="#" name="new-post-form" enctype="multipart/form-data" class="text-center ">
+                            {% csrf_token %}
+
+                            {% for num in nums %}
+                                {{ form.as_p }}
+                            <br>
+                            <br>
+                            {% endfor %}
+                            <input class="form-control btn btn-outline-success btn-sm" type="submit" value="Редактировать">
+                        </form>
+                    </div>
+                </div>
+</div>
+
+
+
+{% endblock %}

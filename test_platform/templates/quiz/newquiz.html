@@ -8,14 +8,14 @@
                     <div class="card-body text-center">
                         <form method="post" action="{% url 'login:newquizadd' %}" name="new-post-form" enctype="multipart/form-data" class="text-center ">
                             {% csrf_token %}
+                            {{ form.management_form }}
                             <input class="form-control form-control-sm mt-4" type="text" placeholder="Название вопроса" value="{{ question_name }}" name="quest1"><br>
                             <textarea class="form-control form-control-sm mb-3" type="text" name="text" placeholder="Описание викторины">{{ text_quiz }}</textarea><br>
                             <input type="hidden" value="{{ num }}" name="num"><br>
-                            {% for num in nums %}
+
                                 {{ form.as_p }}
                             <br>
                             <br>
-                            {% endfor %}
                             <input class="form-control btn btn-outline-success btn-sm" type="submit" value="Добавить">
                         </form>
                     </div>

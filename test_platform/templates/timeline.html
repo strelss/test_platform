@@ -31,8 +31,9 @@
                     </div>
                 </div>
                 <div class="timeline">
+                    <br>
                     {% for post in posts %}
-                        <div class="card mt-2 mb-2">
+                         <div class="card mt-2 mb-2">
                             <div class="card-body mt-2 mb-2">
                                 <p>Название викторины</p>
                                 <div class="form-control form-control-sm">{{ post.name_quiz }}</div>
@@ -42,11 +43,11 @@
                                 <div class="form-control form-control-sm">{{ post.datetime }}</div>
                                 <p>Количество вопросов</p>
                                 <div class="form-control form-control-sm">{{ post.num_of_quest }}</div>
-                                <button class="form-control form-control-sm button mt-1">Пройти тест</button>
-                                <button class="button mt-1 form-control form-control-sm">Редактировать</button>
-                                <button class="button mt-1 form-control form-control-sm">Удалить</button>
-                            </div>
-                        </div>
+                                <a class="form-control form-control-sm button mt-1">Пройти тест</a>
+                                <a href="{% url 'login:edit' post.pk%}" class="button mt-1 form-control form-control-sm">Редактировать</a>
+                                <a class="button mt-1 form-control form-control-sm">Удалить</a>
+                             </div>
+                         </div>
                     {% endfor %}
                 </div>
             </div>

@@ -6,22 +6,43 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.urls import reverse
+from django.forms import formset_factory, inlineformset_factory
 
 
-from .models import Profile, PostQuiz
+from .models import Profile, PostQuiz, Question
 from .forms import RegisterForm, ProfileForm, PostQuizForm, QuestionForm
 
-def NewQuizAdd(request):
+def edit(request, post_id):
+    post = PostQuiz.objects.get(pk=post_id)
+    quests = post.question.all()
     if request.method == 'POST':
-        form = QuestionForm(request.POST)
+        postf = PostQuizForm(request.POST, instance=post)
+        if postf.is_valid():
+            postf.save()
+            messages.success(request, "Изменения сохранены!")
+            return redirect(reverse('login:home'))
+        else:
+            messages.error(request, "Проверьте введенные данные! Там ошибка!")
+            return render(request, 'quiz/edit_quiz.html', {'form': postf})
+    else:
+        postf = PostQuizForm(instance=post)
+        questsf = QuestionFormSet(queryset=quests)
+        return render(request, 'quiz/edit_quiz.html', {'formP':postf, 'formQ': questsf})
+
+def newQuizAdd(request):
+    QuestionFormSet = inlineformset_factory(PostQuiz, Question, form=QuestionForm, extra=1, max_num=10)
+    if request.method == 'POST':
         text = request.POST['text']
         num = int(request.POST['num'])
         name_quiz = request.POST['quest1']
-        print(name_quiz)
-        p = PostQuiz.objects.create(text=text, author=request.user, name_quiz = name_quiz, num_of_quest = num)
-        if form.is_valid():
-            form.instance.post_quiz = p
-            form.save()
+        p = PostQuiz.objects.create(text=text, author=request.user, name_quiz=name_quiz, num_of_quest=num)
+        formset = QuestionFormSet(request.POST, initial=p)
+        print()
+        print(request.POST)
+        print()
+
+        if formset.is_valid():
+            formset.save()
             messages.success(request, "Добавлена новая викторина!")
             return redirect(reverse('login:home'))
 
@@ -42,7 +63,8 @@ def NewQuiz(request):
     nums = a
     question_name = request.POST['question_name']
     text_quiz = request.POST['text_quiz']
-    form = QuestionForm()
+    QuestionFormSet_factory = formset_factory(form=QuestionForm, can_order=True, extra=num, max_num=10)
+    form = QuestionFormSet_factory()
     return render(request, 'quiz/newquiz.html', {'num': num, 'nums':nums, 'question_name':question_name, 'text_quiz':text_quiz, 'form':form })
 
 
@@ -61,10 +83,9 @@ class HomeView(TemplateView):
                 form.save()
                 return redirect(reverse('login:home'))
 
-        context = {
-            'posts': PostQuiz.objects.all()
-        }
-        return render(request, self.timeline_template_name, context)
+        posts = PostQuiz.objects.all()
+        quests = Question.objects.all()
+        return render(request, self.timeline_template_name, {'posts': posts, 'quests':quests})
 
 
 class RegisterView(TemplateView):
